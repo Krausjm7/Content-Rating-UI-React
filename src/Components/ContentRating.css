@@ -1,44 +1,185 @@
-/* ImageRatingComponent.css */
-
-.content-rating {
-    text-align: center;
-    margin-bottom: 20px;
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
   }
   
-  .image {
-    max-width: 100%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  
+  .content-rating {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    /* Crucial change: Allow glow to go beyond the box */
+    overflow: visible; /* Or remove this line entirely */
+  }
+  
+  .content-text {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  .button-and-counts {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      gap: 15px;
   }
   
   .rating-buttons {
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 0;
   }
   
   .like-button,
   .dislike-button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 12px 25px;
     border: none;
-    border-radius: 5px;
-    background-color: #3498db;
-    color: #fff;
-    transition: background-color 0.3s;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    min-width: 130px;
+    position: relative;
+    z-index: 1; /* Keep buttons above the animation */
   }
   
-  .like-button:hover,
+  .like-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .like-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .like-button:active {
+    background-color: #3e8e41;
+    transform: translateY(0);
+    /* Changed shadow color and size */
+    box-shadow: 0 6px 12px rgba(76, 175, 80, 0.7); /* 3x bigger blur and spread, higher opacity */
+  }
+  
+  .dislike-button {
+    background-color: #f44336;
+    color: white;
+  }
+  
   .dislike-button:hover {
-    background-color: #2980b9;
+    background-color: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
-  #reactInfo{
-    max-width: 400px;
-    text-align: justify;
+  .dislike-button:active {
+    background-color: #c62828;
+    transform: translateY(0);
+    /* Changed shadow color and size */
+    box-shadow: 0 6px 12px rgba(244, 67, 54, 0.7); /* 3x bigger blur and spread, higher opacity */
+  }
+  
+  .total-counts {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      font-size: 1em;
+      color: #666;
+      font-weight: bold;
+  }
+  
+  .overall-rating-display {
+    font-weight: bold;
+    color: #444;
+    font-size: 1.1em;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  
+  /* --- Unmissable Click Animation Styles with HUGE Glow --- */
+  .click-animation {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%); /* Centers the element */
+    pointer-events: none; /* Allows clicks to pass through */
+    z-index: 5; /* Ensures it's above other content */
+  }
+  
+  /* Unmissable Like Animation (Massive Green Glow, Grows Up) */
+  .like-animation {
+    background-color: rgba(76, 175, 80, 0.9); /* More solid initial color */
+    animation: unmissableLikeExpandFadeGlow 2s ease-out forwards;
+  }
+  
+  @keyframes unmissableLikeExpandFadeGlow {
+    0% {
+      transform: translate(-50%, -50%) scale(0) translateY(0);
+      opacity: 1; /* Starts fully opaque */
+      box-shadow: 0 0 100px rgba(76, 175, 80, 1); /* Intense initial glow */
+    }
+    50% {
+      opacity: 0.8; /* Stays opaque for longer */
+      transform: translate(-50%, -200%) scale(25) translateY(-50px); /* VERY massive scale, moves rapidly up */
+      box-shadow: 0 0 300px rgba(76, 175, 80, 1); /* HUGE glow at peak */
+    }
+    100% {
+      transform: translate(-50%, -300%) scale(50) translateY(-100px); /* Expands even further */
+      opacity: 0; /* Fades out completely */
+      box-shadow: 0 0 500px rgba(76, 175, 80, 0); /* Glow fades out completely */
+    }
+  }
+  
+  /* Unmissable Dislike Animation (Massive Red Glow, Shrinks Down) */
+  .dislike-animation {
+    background-color: rgba(244, 67, 54, 0.9); /* More solid initial color */
+    animation: unmissableDislikeShrinkFadeGlow 2s ease-in forwards;
+  }
+  
+  @keyframes unmissableDislikeShrinkFadeGlow {
+    0% {
+      transform: translate(-50%, -50%) scale(1) translateY(0);
+      opacity: 1; /* Starts fully opaque */
+      box-shadow: 0 0 100px rgba(244, 67, 54, 1); /* Intense initial glow */
+    }
+    50% {
+      opacity: 0.8; /* Stays opaque for longer */
+      transform: translate(-50%, 100%) scale(0.2) translateY(50px); /* Shrinks significantly, moves rapidly down */
+      box-shadow: 0 0 300px rgba(244, 67, 54, 1); /* HUGE glow at peak */
+    }
+    100% {
+      transform: translate(-50%, 200%) scale(0.01) translateY(100px); /* Shrinks almost to nothing */
+      opacity: 0; /* Fades out completely */
+      box-shadow: 0 0 500px rgba(244, 67, 54, 0); /* Glow fades out completely */
+    }
   }
